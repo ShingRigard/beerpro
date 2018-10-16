@@ -1,0 +1,2 @@
+public class EmptyTestFile {
+}
