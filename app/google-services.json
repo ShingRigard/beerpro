@@ -23,13 +23,21 @@
           }
         },
         {
+          "client_id": "57637960375-92u7s1o453qpucc9190d44f3bf70s9dl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ch.beerpro",
+            "certificate_hash": "a1dfdc91f1ca1903ecbbff8a41530212cff1a3be"
+          }
+        },
+        {
           "client_id": "57637960375-lg41lr244go16gdcu7rdtnqrsp4569v4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAp8wUmzSrUMMvuT-aBQ8QpEU0STaQROvU"
+          "current_key": "AIzaSyB3PW4SlJXZUwItC4N8LGtJqEcWcjttlMM"
         }
       ],
       "services": {
