@@ -76,7 +76,7 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".presentation.MainActivity"/>
         </activity>
-        <activity android:name=".Fridge">
+        <activity android:name=".presentation.profile.myfridge.Fridge">
         </activity>
     </application>
 

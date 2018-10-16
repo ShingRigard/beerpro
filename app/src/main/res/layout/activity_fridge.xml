@@ -9,7 +9,7 @@
     <fragment
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:name="ch.beerpro.myFridgeFragment"
+            android:name="ch.beerpro.presentation.profile.myfridge.myFridgeFragment"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:id="@+id/myFridgeFragment" tools:layout="@layout/fragment_my_fridge"/>
 

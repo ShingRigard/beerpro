@@ -1,7 +1,8 @@
-package ch.beerpro;
+package ch.beerpro.presentation.profile.myfridge;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import ch.beerpro.R;
 
 public class Fridge extends AppCompatActivity {
 
