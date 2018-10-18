@@ -26,9 +26,9 @@ public class Rating implements Entity {
     private String userPhoto;
     private String photo;
     private float rating;
-    private String Location;
     private String comment;
 
+    private String Location;
     /**
      * We use a Map instead of an Array to be able to query it.
      *

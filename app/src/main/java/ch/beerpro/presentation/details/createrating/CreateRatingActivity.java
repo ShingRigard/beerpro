@@ -213,12 +213,16 @@ public class CreateRatingActivity extends AppCompatActivity {
         }
     }
 
+    //TODO: Add Ort hinzufügen Buttonlistener
+    //TODO: Placepicker API starten und Ort zurückgeben (<a href="https://developers.google.com/places/android-sdk/placepicker">)
+    //TODO: Ort in Fenster angeben
     private void saveRating() {
         float rating = addRatingBar.getRating();
         String comment = ratingText.getText().toString();
+        String location = "Wo bin ich?";
         // TODO show a spinner!
         // TODO return the new rating to update the new average immediately
-        model.saveRating(model.getItem(), rating, comment, model.getPhoto())
+        model.saveRating(model.getItem(), rating, comment, location, model.getPhoto())
                 .addOnSuccessListener(task -> onBackPressed())
                 .addOnFailureListener(error -> Log.e(TAG, "Could not save rating", error));
     }
