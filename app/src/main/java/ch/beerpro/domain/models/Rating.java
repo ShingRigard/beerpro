@@ -26,8 +26,6 @@ public class Rating implements Entity {
     private String userPhoto;
     private String photo;
     private float rating;
-    private float mouthfeel;
-    private float bitterness;
     private String Location;
     private String comment;
 
@@ -37,6 +35,5 @@ public class Rating implements Entity {
      * @see <a href="https://firebase.google.com/docs/firestore/solutions/arrays#solution_a_map_of_values"/>
      */
     private Map<String, Boolean> likes;
-    private Map<String, Boolean> flavors;
     private Date creationDate;
 }
