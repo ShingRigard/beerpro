@@ -22,6 +22,10 @@ import ch.beerpro.R;
 import ch.beerpro.domain.models.Beer;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.yalantis.ucrop.UCrop;
@@ -39,6 +43,7 @@ public class CreateRatingActivity extends AppCompatActivity {
     public static final String ITEM = "item";
     public static final String RATING = "rating";
     private static final String TAG = "CreateRatingActivity";
+    private static final int PLACE_PICKER_REQUEST = 1;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -56,6 +61,9 @@ public class CreateRatingActivity extends AppCompatActivity {
 
     @BindView(R.id.photoExplanation)
     TextView photoExplanation;
+
+    @BindView(R.id.button)
+    Button buttonPlacepicker;
 
     private CreateRatingViewModel model;
 
@@ -93,6 +101,18 @@ public class CreateRatingActivity extends AppCompatActivity {
         }
 
         EasyImage.configuration(this).setImagesFolderName("BeerPro");
+
+        buttonPlacepicker.setOnClickListener(view -> {
+            PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+
+            try {
+                startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
+            } catch (GooglePlayServicesRepairableException e) {
+                e.printStackTrace();
+            } catch (GooglePlayServicesNotAvailableException e) {
+                e.printStackTrace();
+            }
+        });
 
         photo.setOnClickListener(view -> {
             EasyImage.openChooserWithDocuments(CreateRatingActivity.this, "", 0);
@@ -167,6 +187,14 @@ public class CreateRatingActivity extends AppCompatActivity {
         } else if (resultCode == UCrop.RESULT_ERROR) {
             handleCropError(data);
         }
+
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(this, data);
+                String toastMsg = String.format("Place: %s", place.getName());
+                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     private void handleCropResult(@NonNull Intent result) {
@@ -219,7 +247,7 @@ public class CreateRatingActivity extends AppCompatActivity {
     private void saveRating() {
         float rating = addRatingBar.getRating();
         String comment = ratingText.getText().toString();
-        String location = "Wo bin ich?";
+        String location = "Unknown";
         // TODO show a spinner!
         // TODO return the new rating to update the new average immediately
         model.saveRating(model.getItem(), rating, comment, location, model.getPhoto())
