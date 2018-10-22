@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +27,8 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.yalantis.ucrop.UCrop;
@@ -44,6 +47,10 @@ public class CreateRatingActivity extends AppCompatActivity {
     public static final String RATING = "rating";
     private static final String TAG = "CreateRatingActivity";
     private static final int PLACE_PICKER_REQUEST = 1;
+   // private static final LatLngBounds DEFAULT_PLACE = new LatLngBounds(
+   //         new LatLng(47.447129, 8.315550), new LatLng(47.310897, 8.710196)
+   // );
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -64,6 +71,9 @@ public class CreateRatingActivity extends AppCompatActivity {
 
     @BindView(R.id.button)
     Button buttonPlacepicker;
+
+    @BindView(R.id.locationText)
+    TextView locationText;
 
     private CreateRatingViewModel model;
 
@@ -104,7 +114,7 @@ public class CreateRatingActivity extends AppCompatActivity {
 
         buttonPlacepicker.setOnClickListener(view -> {
             PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-
+            //builder.setLatLngBounds(DEFAULT_PLACE);
             try {
                 startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
             } catch (GooglePlayServicesRepairableException e) {
@@ -191,8 +201,11 @@ public class CreateRatingActivity extends AppCompatActivity {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(this, data);
-                String toastMsg = String.format("Place: %s", place.getName());
-                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+                String chosenPlace = String.format("Ort\n%s", place.getName());
+                Toast.makeText(this, chosenPlace, Toast.LENGTH_LONG).show();
+                buttonPlacepicker.setText("ORT ÄNDERN");
+                locationText.setText(chosenPlace);
+                locationText.setVisibility(View.VISIBLE);
             }
         }
     }

@@ -101,7 +101,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/addRatingBar" />
 
             <View
-                android:id="@+id/separator4"
+                android:id="@+id/separator7"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="8dp"
@@ -109,6 +109,44 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addRatingExplanation2" />
+
+
+            <Button
+                android:id="@+id/buttonAdditionalRating"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_more_horiz_black_24dp"
+                android:drawableTint="@android:color/darker_gray"
+                android:text="Spezifischer Bewerten"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="10sp"
+                app:layout_constraintEnd_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/separator7"/>
+
+            <View
+                android:id="@+id/separator4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#ffeeeeee"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttonAdditionalRating" />
+
+            <LinearLayout
+                android:id="@+id/linearLayoutAdditionalRatings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/separator4">
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/textView5"
@@ -119,7 +157,7 @@
                 android:text="Was denkst du über das Bier?"
                 android:textAppearance="?attr/textAppearanceListItem"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/separator4" />
+                app:layout_constraintTop_toBottomOf="@+id/linearLayoutAdditionalRatings" />
 
             <ImageView
                 android:id="@+id/avatar"
@@ -147,6 +185,21 @@
                 app:layout_constraintStart_toEndOf="@+id/avatar"
                 app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
+
+            <TextView
+                android:id="@+id/locationText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="Ort\ttunbekannt"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:visibility="gone"
+                app:layout_constraintEnd_toStartOf="@+id/separator5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ratingText"/>
+
             <View
                 android:id="@+id/separator5"
                 android:layout_width="match_parent"
@@ -154,9 +207,10 @@
                 android:background="#ffeeeeee"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ratingText" />
+                app:layout_constraintTop_toBottomOf="@+id/locationText" />
 
             <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
