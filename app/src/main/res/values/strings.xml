@@ -99,6 +99,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="toast_unexpected_error">Unexpected error</string>
+    <string name="title_activity_myFridge">Kühlschrank</string>
     <string name="title_activity_wishlist">Wunschliste</string>
     <string name="title_activity_myratings">Meine Bewertungen</string>
     <string name="title_activity_mybeers">Meine Biere</string>
