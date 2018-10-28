@@ -6,6 +6,7 @@ import ch.beerpro.domain.models.Rating;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -18,6 +19,8 @@ import ch.beerpro.presentation.utils.EntityDiffItemCallback;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseUser;
+
+import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 
@@ -77,6 +80,21 @@ public class RatingsRecyclerViewAdapter extends ListAdapter<Rating, RatingsRecyc
         @BindView(R.id.locationTextView)
         TextView location;
 
+        @BindView(R.id.gridLayoutAdditionalRatings)
+        GridLayout gLAdditionalRatings;
+
+        @BindView(R.id.ratingBarBitterness)
+        RatingBar ratingBarBitterness;
+
+        @BindView(R.id.textViewFlavoursValue)
+        TextView beerFlavours;
+
+        @BindView(R.id.textViewSmellValue)
+        TextView beerSmell;
+
+        @BindView(R.id.textViewLookValue)
+        TextView beerLook;
+
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, itemView);
@@ -87,7 +105,25 @@ public class RatingsRecyclerViewAdapter extends ListAdapter<Rating, RatingsRecyc
 
             ratingBar.setNumStars(5);
             ratingBar.setRating(item.getRating());
-            location.setText("Ort " + item.getLocation());
+
+            if(item.getRatingBitterness() >= 0) {
+                gLAdditionalRatings.setVisibility(View.VISIBLE);
+                ratingBarBitterness.setNumStars(5);
+                ratingBarBitterness.setRating(item.getRatingBitterness());
+                beerFlavours.setText(item.getBeerFlavour());
+                beerSmell.setText(item.getBeerSmell());
+                beerLook.setText(item.getBeerLook());
+
+            } else {
+                gLAdditionalRatings.setVisibility(View.GONE);
+            }
+
+            if(item.getLocation() != null) {
+                location.setText("@" + item.getLocation());
+                location.setVisibility(View.VISIBLE);
+            } else {
+                location.setVisibility(View.GONE);
+            }
 
             String formattedDate =
                     DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.SHORT).format(item.getCreationDate());

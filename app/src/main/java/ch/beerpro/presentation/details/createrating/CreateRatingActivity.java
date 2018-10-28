@@ -97,8 +97,7 @@ public class CreateRatingActivity extends AppCompatActivity {
     Spinner spinnerBeerLook;
 
     private CreateRatingViewModel model;
-    private String location = "unknown";
-    private Boolean addtionalRatingSet = false;
+    private String location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
