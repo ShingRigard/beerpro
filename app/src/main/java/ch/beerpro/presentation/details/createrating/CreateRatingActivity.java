@@ -72,10 +72,33 @@ public class CreateRatingActivity extends AppCompatActivity {
     @BindView(R.id.button)
     Button buttonPlacepicker;
 
+    @BindView(R.id.buttonAdditionalRating)
+    Button buttonAdditionalRating;
+
     @BindView(R.id.locationText)
     TextView locationText;
 
+    @BindView(R.id.gridLayoutAdditionalRatings)
+    GridLayout gLAddtionalRatings;
+
+    @BindView(R.id.arrowIcon)
+    ImageView arrowIcon;
+
+    @BindView(R.id.ratingBarBitterness)
+    RatingBar ratingBarBitterness;
+
+    @BindView(R.id.spinnerSmells)
+    Spinner spinnerBeerSmells;
+
+    @BindView(R.id.spinnerFlavours)
+    Spinner spinnerBeerFalvours;
+
+    @BindView(R.id.spinnerLook)
+    Spinner spinnerBeerLook;
+
     private CreateRatingViewModel model;
+    private String location = "unknown";
+    private Boolean addtionalRatingSet = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +144,17 @@ public class CreateRatingActivity extends AppCompatActivity {
                 e.printStackTrace();
             } catch (GooglePlayServicesNotAvailableException e) {
                 e.printStackTrace();
+            }
+        });
+
+        buttonAdditionalRating.setOnClickListener(view -> {
+            if (gLAddtionalRatings.getVisibility() == View.VISIBLE) {
+                gLAddtionalRatings.setVisibility(View.GONE);
+                arrowIcon.setImageResource(R.drawable.menu_arrow_left);
+            }
+            else {
+                gLAddtionalRatings.setVisibility(View.VISIBLE);
+                arrowIcon.setImageResource(R.drawable.menu_arrow_down);
             }
         });
 
@@ -201,10 +235,10 @@ public class CreateRatingActivity extends AppCompatActivity {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(this, data);
-                String chosenPlace = String.format("Ort\n%s", place.getName());
-                Toast.makeText(this, chosenPlace, Toast.LENGTH_LONG).show();
+                location = place.getName().toString();
+                Toast.makeText(this, String.format("Ort\n%s", location), Toast.LENGTH_LONG).show();
                 buttonPlacepicker.setText("ORT ÄNDERN");
-                locationText.setText(chosenPlace);
+                locationText.setText(location);
                 locationText.setVisibility(View.VISIBLE);
             }
         }
@@ -254,17 +288,23 @@ public class CreateRatingActivity extends AppCompatActivity {
         }
     }
 
-    //TODO: Add Ort hinzufügen Buttonlistener
-    //TODO: Placepicker API starten und Ort zurückgeben (<a href="https://developers.google.com/places/android-sdk/placepicker">)
-    //TODO: Ort in Fenster angeben
     private void saveRating() {
         float rating = addRatingBar.getRating();
+        float ratingBitterness = ratingBarBitterness.getRating();
         String comment = ratingText.getText().toString();
-        String location = "Unknown";
+        String beerSmell = spinnerBeerSmells.getSelectedItem().toString();
+        String beerFlavour = spinnerBeerFalvours.getSelectedItem().toString();
+        String beerLook = spinnerBeerLook.getSelectedItem().toString();
         // TODO show a spinner!
         // TODO return the new rating to update the new average immediately
-        model.saveRating(model.getItem(), rating, comment, location, model.getPhoto())
-                .addOnSuccessListener(task -> onBackPressed())
-                .addOnFailureListener(error -> Log.e(TAG, "Could not save rating", error));
+        if(gLAddtionalRatings.getVisibility()==View.VISIBLE) {
+            model.saveRating(model.getItem(), rating, comment, location, model.getPhoto(), ratingBitterness, beerSmell, beerFlavour, beerLook)
+                    .addOnSuccessListener(task -> onBackPressed())
+                    .addOnFailureListener(error -> Log.e(TAG, "Could not save rating", error));
+        } else {
+            model.saveRating(model.getItem(), rating, comment, location, model.getPhoto(), (float)-1, null, null, null)
+                    .addOnSuccessListener(task -> onBackPressed())
+                    .addOnFailureListener(error -> Log.e(TAG, "Could not save rating", error));
+        }
     }
 }

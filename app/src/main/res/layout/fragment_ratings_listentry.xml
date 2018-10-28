@@ -61,6 +61,129 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/comment" />
 
+        <TextView
+            android:id="@+id/locationTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="Ort unknown"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
+
+    <!-- TODO sollte optional auch angezeigt werden wenn jemand eine speziferische Bewertung abgiebt
+        <GridLayout
+            android:id="@+id/gridLayoutAdditionalRatings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginTop="8dp"
+            android:paddingBottom="24dp"
+            android:columnCount="2"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ratingBar">
+
+
+            <TextView
+                android:id="@+id/textViewBitterness"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:textColor="@android:color/black"
+                android:text="Bitterkeit"
+                android:textStyle="bold"/>
+
+            <RatingBar
+                android:id="@+id/ratingBarBitterness"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:layout_marginEnd="8dp"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:rating="4"
+                android:stepSize="0.5"
+                android:theme="@style/RatingBar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/comment" />
+
+            <TextView
+                android:id="@+id/textViewSmell"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:textColor="@android:color/black"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:text="Geruch"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewSmellValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="1"
+                android:layout_column="1"
+                android:layout_gravity="fill_horizontal"
+                android:text="seifig" />
+
+            <TextView
+                android:id="@+id/textViewFlavours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_row="2"
+                android:layout_column="0"
+                android:text="Geschmack"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewFlavoursValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="2"
+                android:layout_column="1"
+                android:layout_gravity="fill_horizontal"
+                android:text="vollmundig" />
+
+            <TextView
+                android:id="@+id/textViewLook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_row="3"
+                android:layout_column="0"
+                android:text="Aussehen"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewLookValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="3"
+                android:layout_column="1"
+                android:layout_gravity="fill_horizontal"
+                android:text="klar" />
+
+        </GridLayout>
+
+    -->
+
         <ImageView
             android:id="@+id/avatar"
             android:layout_width="32sp"
@@ -68,7 +191,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ratingBar"
+            app:layout_constraintTop_toBottomOf="@+id/locationTextView"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
@@ -80,7 +203,7 @@
             android:text="Author"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/avatar"
-            app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
+            app:layout_constraintTop_toBottomOf="@+id/locationTextView" />
 
         <TextView
             android:id="@+id/date"

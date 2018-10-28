@@ -74,6 +74,9 @@ public class RatingsRecyclerViewAdapter extends ListAdapter<Rating, RatingsRecyc
         @BindView(R.id.photo)
         ImageView photo;
 
+        @BindView(R.id.locationTextView)
+        TextView location;
+
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, itemView);
@@ -84,6 +87,8 @@ public class RatingsRecyclerViewAdapter extends ListAdapter<Rating, RatingsRecyc
 
             ratingBar.setNumStars(5);
             ratingBar.setRating(item.getRating());
+            location.setText("Ort " + item.getLocation());
+
             String formattedDate =
                     DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.SHORT).format(item.getCreationDate());
             date.setText(formattedDate);
