@@ -33,6 +33,6 @@ public class MyFridgeViewModel extends ViewModel implements CurrentUser {
     }
 
     public Task<Void> toggleItemInFridgeList(String itemId) {
-        return myFridgeRepository.toggleUserFridgeItem(getCurrentUser().getUid(), itemId);
+        return myFridgeRepository.addUserFridgeItem(getCurrentUser().getUid(), itemId);
     }
 }
