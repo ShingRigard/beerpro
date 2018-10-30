@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,12 @@ import ch.beerpro.R;
 import ch.beerpro.domain.models.Beer;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.yalantis.ucrop.UCrop;
@@ -39,6 +46,11 @@ public class CreateRatingActivity extends AppCompatActivity {
     public static final String ITEM = "item";
     public static final String RATING = "rating";
     private static final String TAG = "CreateRatingActivity";
+    private static final int PLACE_PICKER_REQUEST = 1;
+   // private static final LatLngBounds DEFAULT_PLACE = new LatLngBounds(
+   //         new LatLng(47.447129, 8.315550), new LatLng(47.310897, 8.710196)
+   // );
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -57,7 +69,35 @@ public class CreateRatingActivity extends AppCompatActivity {
     @BindView(R.id.photoExplanation)
     TextView photoExplanation;
 
+    @BindView(R.id.button)
+    Button buttonPlacepicker;
+
+    @BindView(R.id.buttonAdditionalRating)
+    Button buttonAdditionalRating;
+
+    @BindView(R.id.locationText)
+    TextView locationText;
+
+    @BindView(R.id.gridLayoutAdditionalRatings)
+    GridLayout gLAddtionalRatings;
+
+    @BindView(R.id.arrowIcon)
+    ImageView arrowIcon;
+
+    @BindView(R.id.ratingBarBitterness)
+    RatingBar ratingBarBitterness;
+
+    @BindView(R.id.spinnerSmells)
+    Spinner spinnerBeerSmells;
+
+    @BindView(R.id.spinnerFlavours)
+    Spinner spinnerBeerFalvours;
+
+    @BindView(R.id.spinnerLook)
+    Spinner spinnerBeerLook;
+
     private CreateRatingViewModel model;
+    private String location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +133,29 @@ public class CreateRatingActivity extends AppCompatActivity {
         }
 
         EasyImage.configuration(this).setImagesFolderName("BeerPro");
+
+        buttonPlacepicker.setOnClickListener(view -> {
+            PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+            //builder.setLatLngBounds(DEFAULT_PLACE);
+            try {
+                startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
+            } catch (GooglePlayServicesRepairableException e) {
+                e.printStackTrace();
+            } catch (GooglePlayServicesNotAvailableException e) {
+                e.printStackTrace();
+            }
+        });
+
+        buttonAdditionalRating.setOnClickListener(view -> {
+            if (gLAddtionalRatings.getVisibility() == View.VISIBLE) {
+                gLAddtionalRatings.setVisibility(View.GONE);
+                arrowIcon.setImageResource(R.drawable.menu_arrow_left);
+            }
+            else {
+                gLAddtionalRatings.setVisibility(View.VISIBLE);
+                arrowIcon.setImageResource(R.drawable.menu_arrow_down);
+            }
+        });
 
         photo.setOnClickListener(view -> {
             EasyImage.openChooserWithDocuments(CreateRatingActivity.this, "", 0);
@@ -167,6 +230,17 @@ public class CreateRatingActivity extends AppCompatActivity {
         } else if (resultCode == UCrop.RESULT_ERROR) {
             handleCropError(data);
         }
+
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(this, data);
+                location = place.getName().toString();
+                Toast.makeText(this, String.format("Ort\n%s", location), Toast.LENGTH_LONG).show();
+                buttonPlacepicker.setText("ORT ÄNDERN");
+                locationText.setText(location);
+                locationText.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     private void handleCropResult(@NonNull Intent result) {
@@ -215,11 +289,21 @@ public class CreateRatingActivity extends AppCompatActivity {
 
     private void saveRating() {
         float rating = addRatingBar.getRating();
+        float ratingBitterness = ratingBarBitterness.getRating();
         String comment = ratingText.getText().toString();
+        String beerSmell = spinnerBeerSmells.getSelectedItem().toString();
+        String beerFlavour = spinnerBeerFalvours.getSelectedItem().toString();
+        String beerLook = spinnerBeerLook.getSelectedItem().toString();
         // TODO show a spinner!
         // TODO return the new rating to update the new average immediately
-        model.saveRating(model.getItem(), rating, comment, model.getPhoto())
-                .addOnSuccessListener(task -> onBackPressed())
-                .addOnFailureListener(error -> Log.e(TAG, "Could not save rating", error));
+        if(gLAddtionalRatings.getVisibility()==View.VISIBLE) {
+            model.saveRating(model.getItem(), rating, comment, location, model.getPhoto(), ratingBitterness, beerSmell, beerFlavour, beerLook)
+                    .addOnSuccessListener(task -> onBackPressed())
+                    .addOnFailureListener(error -> Log.e(TAG, "Could not save rating", error));
+        } else {
+            model.saveRating(model.getItem(), rating, comment, location, model.getPhoto(), (float)-1, null, null, null)
+                    .addOnSuccessListener(task -> onBackPressed())
+                    .addOnFailureListener(error -> Log.e(TAG, "Could not save rating", error));
+        }
     }
 }
