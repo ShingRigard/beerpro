@@ -47,9 +47,9 @@ public class CreateRatingActivity extends AppCompatActivity {
     public static final String RATING = "rating";
     private static final String TAG = "CreateRatingActivity";
     private static final int PLACE_PICKER_REQUEST = 1;
-   // private static final LatLngBounds DEFAULT_PLACE = new LatLngBounds(
-   //         new LatLng(47.447129, 8.315550), new LatLng(47.310897, 8.710196)
-   // );
+    private static final LatLngBounds DEFAULT_PLACE = new LatLngBounds(
+        new LatLng(47.320230, 8.448060), new LatLng(47.447129, 8.625370)
+    );
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -136,7 +136,7 @@ public class CreateRatingActivity extends AppCompatActivity {
 
         buttonPlacepicker.setOnClickListener(view -> {
             PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-            //builder.setLatLngBounds(DEFAULT_PLACE);
+            builder.setLatLngBounds(DEFAULT_PLACE);
             try {
                 startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
             } catch (GooglePlayServicesRepairableException e) {
