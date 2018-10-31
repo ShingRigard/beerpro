@@ -1,13 +1,12 @@
 package ch.beerpro.presentation.profile.myfridge;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.TextView;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
@@ -70,11 +69,17 @@ public class MyFridgeRecyclerViewAdapter extends ListAdapter<Pair<MyFridgeBeer, 
         @BindView(R.id.numRatings)
         TextView numRatings;
 
-        @BindView(R.id.amountInTheFridge)
-        TextView amountInTheFridge;
+        @BindView(R.id.amountInFridge)
+        EditText amountInFridge;
 
         @BindView(R.id.removeFromFridge)
         Button remove;
+
+        @BindView(R.id.addAmountInFridge)
+        Button increment;
+
+        @BindView(R.id.removeAmountInFridge)
+        Button decrement;
 
         ViewHolder(View view) {
             super(view);
@@ -93,10 +98,26 @@ public class MyFridgeRecyclerViewAdapter extends ListAdapter<Pair<MyFridgeBeer, 
             numRatings.setText(itemView.getResources().getString(R.string.fmt_num_ratings, item.getNumRatings()));
             itemView.setOnClickListener(v -> listener.onMoreClickedListener(photo, item));
 
-            String formattedDate =
-                    DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.SHORT).format(fridgeBeer.getAmountStored());
-            amountInTheFridge.setText(formattedDate);
-            remove.setOnClickListener(v -> listener.onFridgeBeerClickedListener(item));
+            amountInFridge.setText(Integer.toString(fridgeBeer.getAmountStored()));
+            amountInFridge.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    listener.afterTextChanged(item, s);
+                }
+            });
+            remove.setOnClickListener(v -> listener.onFridgeBeerDeleteClickedListener(item));
+            increment.setOnClickListener(v -> listener.onIncrementClickedListener(item));
+            decrement.setOnClickListener(v -> listener.onDecrementClickedListener(item));
         }
 
     }

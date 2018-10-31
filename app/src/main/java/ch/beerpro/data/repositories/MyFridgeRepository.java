@@ -55,7 +55,26 @@ public class MyFridgeRepository {
         });
     }
 
+    public Task<Void> substractUserFridgeBeer(String userId, String itemId) {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        String fridgeBeerId = MyFridgeBeer.generateId(userId, itemId);
+
+        DocumentReference fridgeEntryQuery = db.collection(MyFridgeBeer.COLLECTION).document(fridgeBeerId);
+
+        return fridgeEntryQuery.get().continueWithTask(task -> {
+            if (task.isSuccessful() && task.getResult().exists()) {
+                return fridgeEntryQuery.update("amountStored", task.getResult().getLong(MyFridgeBeer.FIELD_AMOUNT_STORED) - 1);
+            } else {
+                throw task.getException();
+            }
+        });
+    }
+
     public Task<Void> changeAmountInFridge(String userId, String itemId, int newAmount) {
+
+        if(newAmount == 0) deleteBeerFromFridge(userId, itemId);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -69,6 +88,23 @@ public class MyFridgeRepository {
            } else {
                throw task.getException();
            }
+        });
+    }
+
+    public Task<Void> deleteBeerFromFridge(String userId, String itemId) {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        String fridgeBeerId = MyFridgeBeer.generateId(userId, itemId);
+
+        DocumentReference fridgeEntryQuery = db.collection(MyFridgeBeer.COLLECTION).document(fridgeBeerId);
+
+        return fridgeEntryQuery.get().continueWithTask(task -> {
+            if(task.isSuccessful() && task.getResult().exists()) {
+                return fridgeEntryQuery.delete();
+            } else {
+                throw task.getException();
+            }
         });
     }
 
