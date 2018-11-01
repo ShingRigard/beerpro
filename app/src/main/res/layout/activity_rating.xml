@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
+    android:animateLayoutChanges="true"
     tools:context=".presentation.details.createrating.CreateRatingActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -53,7 +54,8 @@
                     android:focusableInTouchMode="true"
                     android:scaleType="centerCrop"
 
-                    app:srcCompat="@drawable/ic_image_white_24dp" />
+                    app:srcCompat="@drawable/ic_image_white_24dp"
+                    android:contentDescription="Optional picture added to rating" />
 
                 <TextView
                     android:id="@+id/photoExplanation"
@@ -86,7 +88,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
-
             <TextView
                 android:id="@+id/addRatingExplanation2"
                 android:layout_width="wrap_content"
@@ -94,14 +95,14 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="8dp"
                 android:text="Bewertung durch Ziehen der Sterne verändern"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 android:textStyle="italic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addRatingBar" />
 
             <View
-                android:id="@+id/separator4"
+                android:id="@+id/separator7"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="8dp"
@@ -109,6 +110,150 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addRatingExplanation2" />
+
+            <Button
+                android:id="@+id/buttonAdditionalRating"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableTint="@android:color/darker_gray"
+                android:text="Spezifischer Bewerten"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/separator7"/>
+
+            <ImageView
+                android:id="@+id/arrowIcon"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/buttonAdditionalRating"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/buttonAdditionalRating"
+                app:srcCompat="@drawable/menu_arrow_left"
+                android:contentDescription="Arrow Icon to show that something is or can be hidden" />
+
+
+            <GridLayout
+                android:id="@+id/gridLayoutAdditionalRatings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="8dp"
+                android:paddingBottom="24dp"
+                android:columnCount="2"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttonAdditionalRating">
+
+
+                <TextView
+                    android:id="@+id/textViewBitterness"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_row="0"
+                    android:layout_column="0"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="@android:color/black"
+                    android:text="Bitterkeit"
+                    android:textStyle="bold"/>
+
+                <RatingBar
+                    android:id="@+id/ratingBarBitterness"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_row="0"
+                    android:layout_column="1"
+                    android:layout_marginEnd="8dp"
+                    android:isIndicator="false"
+                    android:numStars="5"
+                    android:rating="0"
+                    android:stepSize="0.5"
+                    android:theme="@style/RatingBar"
+                    android:transitionName="rating"/>
+
+                <TextView
+                    android:id="@+id/textViewSmell"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="@android:color/black"
+                    android:layout_row="1"
+                    android:layout_column="0"
+                    android:text="Geruch"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/spinnerSmells"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_row="1"
+                    android:layout_column="1"
+                    android:layout_gravity="fill_horizontal"
+                    android:entries="@array/rating_smell"
+                    android:spinnerMode="dialog" />
+
+                <TextView
+                    android:id="@+id/textViewFlavours"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_row="2"
+                    android:layout_column="0"
+                    android:text="Geschmack"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/spinnerFlavours"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_row="2"
+                    android:layout_column="1"
+                    android:layout_gravity="fill_horizontal"
+                    android:entries="@array/rating_flavours"
+                    android:spinnerMode="dialog" />
+
+                <TextView
+                    android:id="@+id/textViewLook"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_row="3"
+                    android:layout_column="0"
+                    android:text="Aussehen"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/spinnerLook"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_row="3"
+                    android:layout_column="1"
+                    android:layout_gravity="fill_horizontal"
+                    android:entries="@array/rating_look"
+                    android:spinnerMode="dialog" />
+
+            </GridLayout>
+
+            <View
+                android:id="@+id/separator4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#ffeeeeee"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/gridLayoutAdditionalRatings" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -119,17 +264,18 @@
                 android:text="Was denkst du über das Bier?"
                 android:textAppearance="?attr/textAppearanceListItem"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/separator4" />
+                app:layout_constraintTop_toBottomOf="@+id/gridLayoutAdditionalRatings" />
 
             <ImageView
                 android:id="@+id/avatar"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="@dimen/default_margin"
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView5"
-                tools:srcCompat="@tools:sample/avatars" />
+                tools:srcCompat="@tools:sample/avatars"
+                android:contentDescription="Displays avatar of user" />
 
             <EditText
                 android:id="@+id/ratingText"
@@ -145,7 +291,23 @@
                 android:paddingBottom="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/avatar"
-                app:layout_constraintTop_toBottomOf="@+id/textView5" />
+                app:layout_constraintTop_toBottomOf="@+id/textView5"
+                android:autofillHints="Deine Meinung" />
+
+
+            <TextView
+                android:id="@+id/locationText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:text="unknown"
+                android:visibility="gone"
+                app:layout_constraintEnd_toStartOf="@+id/separator5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ratingText"/>
 
             <View
                 android:id="@+id/separator5"
@@ -154,9 +316,10 @@
                 android:background="#ffeeeeee"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ratingText" />
+                app:layout_constraintTop_toBottomOf="@+id/locationText" />
 
             <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -174,7 +337,7 @@
                     android:drawableTint="@android:color/darker_gray"
                     android:text="Ort Hinzufügen"
                     android:textColor="@android:color/darker_gray"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
                 <!--
                                 <View
                                     android:layout_width="1dp"

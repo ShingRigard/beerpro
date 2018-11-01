@@ -17,9 +17,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@drawable/ic_place_black_24dp"
+            android:drawableTop="@drawable/ic_star_black_24dp"
             android:drawableTint="@android:color/darker_gray"
-            android:text="Ort Hinzufügen"
+            android:onClick="onAddRatingClickedListener"
+            android:text="Neue Bewertung"
             android:textColor="@android:color/darker_gray"
             android:textSize="10sp" />
 

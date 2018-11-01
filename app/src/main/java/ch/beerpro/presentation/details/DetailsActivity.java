@@ -143,6 +143,24 @@ public class DetailsActivity extends AppCompatActivity implements OnRatingLikedL
 
     private void updateRatings(List<Rating> ratings) {
         adapter.submitList(new ArrayList<>(ratings));
+        try {
+            float rating = model.getRatings().getValue().stream()
+                    .filter(u -> u.getUserId().equals(model.getCurrentUser().getUid()))
+                    .findFirst()
+                    .get().getRating();
+            addRatingBar.setIsIndicator(true);
+            addRatingBar.setOnRatingBarChangeListener(null);
+            addRatingBar.setRating(rating);
+        }
+        catch (Exception e){
+        }
+    }
+
+    public void onAddRatingClickedListener(View view){
+        Intent intent = new Intent(this, CreateRatingActivity.class);
+        intent.putExtra(CreateRatingActivity.ITEM, model.getBeer().getValue());
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, addRatingBar, "rating");
+        startActivity(intent, options.toBundle());
     }
 
     @Override
