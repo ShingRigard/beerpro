@@ -15,14 +15,15 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ch.beerpro.GlideApp;
 import ch.beerpro.R;
+import ch.beerpro.domain.models.MyFridgeBeer;
 import ch.beerpro.domain.models.Rating;
 import ch.beerpro.domain.models.Wish;
 import ch.beerpro.presentation.MainViewModel;
 import ch.beerpro.presentation.profile.mybeers.MyBeersActivity;
 import ch.beerpro.domain.models.MyBeer;
+import ch.beerpro.presentation.profile.myfridge.MyFridgeActivity;
 import ch.beerpro.presentation.profile.myratings.MyRatingsActivity;
 import ch.beerpro.presentation.profile.mywishlist.WishlistActivity;
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -68,6 +69,7 @@ public class ProfileFragment extends Fragment {
         ButterKnife.bind(this, rootView);
 
         model = ViewModelProviders.of(this).get(MainViewModel.class);
+        model.getMyFridge().observe(this, this::updateMyFridgeCount);
         model.getMyWishlist().observe(this, this::updateWishlistCount);
         model.getMyRatings().observe(this, this::updateRatingsCount);
         model.getMyBeers().observe(this, this::updateMyBeersCount);
@@ -95,6 +97,12 @@ public class ProfileFragment extends Fragment {
         startActivity(intent);
     }
 
+    @OnClick(R.id.myFridge)
+    public void handleMyFridgeClick(View view) {
+        Intent intent = new Intent(getActivity(), MyFridgeActivity.class);
+        startActivity(intent);
+    }
+
     @OnClick(R.id.myWishlist)
     public void handleMyWishlistClick(View view) {
         Intent intent = new Intent(getActivity(), WishlistActivity.class);
@@ -115,4 +123,7 @@ public class ProfileFragment extends Fragment {
         myWishlistCount.setText(String.valueOf(wishes.size()));
     }
 
+    private void updateMyFridgeCount(List<MyFridgeBeer> fridgeBeers) {
+        myFridgeCount.setText(String.valueOf(fridgeBeers.size()));
+    }
 }

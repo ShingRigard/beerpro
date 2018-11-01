@@ -121,6 +121,7 @@ public class DetailsActivity extends AppCompatActivity implements OnRatingLikedL
     @OnClick(R.id.actionsButton)
     public void showBottomSheetDialog() {
         View view = getLayoutInflater().inflate(R.layout.single_bottom_sheet_dialog, null);
+        view.findViewById(R.id.addToFridge).setOnClickListener(model::addToFridge);
         BottomSheetDialog dialog = new BottomSheetDialog(this);
         dialog.setContentView(view);
         dialog.show();
