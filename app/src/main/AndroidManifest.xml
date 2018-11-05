@@ -31,6 +31,7 @@
         <activity
                 android:name=".presentation.details.DetailsActivity"
                 android:label="@string/title_activity_single_beer"
+                android:launchMode="singleTop"
                 android:parentActivityName=".presentation.explore.search.SearchActivity"
                 android:theme="@style/DetailsPageTheme">
             <meta-data
