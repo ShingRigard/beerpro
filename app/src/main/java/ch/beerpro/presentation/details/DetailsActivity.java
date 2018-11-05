@@ -26,7 +26,6 @@ import ch.beerpro.domain.models.Beer;
 import ch.beerpro.domain.models.Rating;
 import ch.beerpro.domain.models.Wish;
 import ch.beerpro.presentation.details.createrating.CreateRatingActivity;
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
@@ -143,16 +142,13 @@ public class DetailsActivity extends AppCompatActivity implements OnRatingLikedL
 
     private void updateRatings(List<Rating> ratings) {
         adapter.submitList(new ArrayList<>(ratings));
-        try {
-            float rating = model.getRatings().getValue().stream()
-                    .filter(u -> u.getUserId().equals(model.getCurrentUser().getUid()))
-                    .findFirst()
-                    .get().getRating();
-            addRatingBar.setIsIndicator(true);
-            addRatingBar.setOnRatingBarChangeListener(null);
-            addRatingBar.setRating(rating);
-        }
-        catch (Exception e){
+        for (Rating r : ratings) {
+            if (r.getUserId().equals(model.getCurrentUser().getUid())) {
+                addRatingBar.setIsIndicator(true);
+                addRatingBar.setOnRatingBarChangeListener(null);
+                addRatingBar.setRating(r.getRating());
+                break;
+            }
         }
     }
 
