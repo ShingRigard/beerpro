@@ -97,16 +97,16 @@ public class MyFridgeActivity extends AppCompatActivity implements OnMyFridgeIte
     }
 
     @Override
-    public void onIncrementClickedListener(Beer beer) {
+    public void onIncrementClickedListener(Beer beer, View view) {
         model.addAmountToFridgeBeer(beer.getId());
-        EditText editText = findViewById(R.id.amountInFridge);
+        EditText editText = view.findViewById(R.id.amountInFridge);
         editText.setText(Integer.toString(Integer.parseInt(editText.getText().toString()) + 1));
     }
 
     @Override
-    public void onDecrementClickedListener(Beer beer) {
+    public void onDecrementClickedListener(Beer beer, View view) {
         model.removeAmountToFridgeBeer(beer.getId());
-        EditText editText = findViewById(R.id.amountInFridge);
+        EditText editText = view.findViewById(R.id.amountInFridge);
         editText.setText(Integer.toString(Integer.parseInt(editText.getText().toString()) - 1));
     }
 
@@ -115,19 +115,5 @@ public class MyFridgeActivity extends AppCompatActivity implements OnMyFridgeIte
         if (!s.toString().equals("")) {
             model.changeAmountOfFridgeBeer(beer.getId(), Integer.parseInt(s.toString()));
         }
-    }
-
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
     }
 }

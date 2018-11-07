@@ -99,25 +99,19 @@ public class MyFridgeRecyclerViewAdapter extends ListAdapter<Pair<MyFridgeBeer, 
             itemView.setOnClickListener(v -> listener.onMoreClickedListener(photo, item));
 
             amountInFridge.setText(Integer.toString(fridgeBeer.getAmountStored()));
-            amountInFridge.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
+            amountInFridge.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
                 @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                public void onFocusChange(View v, boolean hasFocus) {
 
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    listener.afterTextChanged(item, s);
+                    if(!hasFocus){
+                        listener.afterTextChanged(item, amountInFridge.getText());
+                    }
                 }
             });
             remove.setOnClickListener(v -> listener.onFridgeBeerDeleteClickedListener(item));
-            increment.setOnClickListener(v -> listener.onIncrementClickedListener(item));
-            decrement.setOnClickListener(v -> listener.onDecrementClickedListener(item));
+            increment.setOnClickListener(v -> listener.onIncrementClickedListener(item, itemView));
+            decrement.setOnClickListener(v -> listener.onDecrementClickedListener(item, itemView));
         }
 
     }
