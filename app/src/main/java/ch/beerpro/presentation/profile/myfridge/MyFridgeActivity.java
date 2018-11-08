@@ -105,9 +105,13 @@ public class MyFridgeActivity extends AppCompatActivity implements OnMyFridgeIte
 
     @Override
     public void onDecrementClickedListener(Beer beer, View view) {
-        model.removeAmountToFridgeBeer(beer.getId());
         EditText editText = view.findViewById(R.id.amountInFridge);
-        editText.setText(Integer.toString(Integer.parseInt(editText.getText().toString()) - 1));
+        int newAmount = Integer.parseInt(editText.getText().toString()) - 1;
+        if(newAmount <= 0) {
+            model.toggleItemInFridgeList(beer.getId());
+        }
+        model.removeAmountToFridgeBeer(beer.getId());
+        editText.setText(Integer.toString(newAmount));
     }
 
     @Override
